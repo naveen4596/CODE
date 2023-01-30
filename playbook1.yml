@@ -1,0 +1,22 @@
+---
+- hosts: dev
+  connection: ssh
+
+  tasks:
+    - name: installing git
+      command: yum install git -y
+
+    - name: installing httpd
+      action: yum name=httpd state=present
+      notify: restart httpd 
+
+    - name: getting code from git hub
+      git:
+        repo: "https://github.com/naveen4596/new.git"
+        dest: "/var/www/html/index.html"
+        version: "master"
+
+
+  handlers:
+    - name: restart httpd
+      service: name=httpd state=restarted 
