@@ -1,0 +1,25 @@
+---
+- hosts: dev
+  connection: ssh
+
+  tasks:
+
+    - name: checking the info in slave server
+      shell: rpm -qa | grep git
+      register: output
+      ignore_errors: yes
+
+    - debug:
+        msg: "git is not installed in slave server"
+      when: "not 'git' in output.stdout"
+    
+    - name: intalling git  if it is not present
+      command: yum install git -y
+      when: "not 'git' in output.stdout"
+
+    - debug:
+         msg: "git is installed in slave server"
+      when: " 'git' in output.stdout"
+
+
+
