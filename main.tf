@@ -1,3 +1,4 @@
+# adding IAM users into a IAM group
 provider "aws" {
 region="us-west-1"
 access_key=""
